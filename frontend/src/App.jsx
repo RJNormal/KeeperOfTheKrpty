@@ -1,9 +1,4 @@
-
-import './App.css'
-
 function App() {
- 
-
   return (
     <>
       <h1>The Krypt has decided its new Keeper...and it is</h1>
@@ -13,4 +8,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
