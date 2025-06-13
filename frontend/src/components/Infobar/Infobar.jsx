@@ -14,6 +14,19 @@ function Navigation({ isLoaded }) {
         </NavLink>
       </div>
 
+      <div id='profile'>
+      <div id='newspotform'>
+        {sessionUser && (
+          <NavLink to='/spots/new'>
+        <p id='newspotform'>Creat a New Spot</p>
+      </NavLink>
+
+        )}
+      </div>
+        {isLoaded && (
+          <ProfileButton user={sessionUser} />
+        )}
+      </div>
     </nav>
   );
 }
