@@ -1,0 +1,84 @@
+.navbar {
+    display: flex;
+    justify-content:space-between;
+    align-items:center ;
+    border-bottom: 1px solid #ddd;
+   /* background-color: yellowgreen; */
+  }
+  .profile-dropdown {
+    position: absolute;  
+    border: 2px solid black;
+    background-color: white;
+    margin-left: 58px;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom:  -170px;
+}
+
+.dropdownloggedout{
+  width: 120px;
+  height: 40px;
+  margin-top: -93px;
+  margin-right: 110px;
+}
+.dropdownloggedin{
+  width: 120px;
+  height: 130px;
+  flex-direction: column;
+
+}
+#modalmenu:hover{
+cursor: pointer;
+}
+
+#homelink {
+  display: flex;
+  align-items: center;
+}
+
+#imglink {
+  width: 40px; 
+  height: auto;
+  margin-right: 8px;
+}
+
+#homelink a {
+  display: flex;
+  align-items: center; 
+  text-decoration: none; 
+}
+#managespotslink{
+  border-top: solid black;
+  border-bottom: solid black;
+  text-decoration: none;
+  color: black;
+  padding: 4px;
+}
+#logout{
+  background-color: gray;
+  border-radius: 40%;
+  height: 30%;
+  align-items: center;
+  width: 80px;
+  display: block;
+  margin: 0 auto;
+  color: white;
+}
+#logout:hover{
+  cursor: pointer;
+}
+.loginptag{
+margin-top: .5px;
+margin-bottom: -10px;
+}
+  
+#profile{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  min-width: 20%;
+}
+  

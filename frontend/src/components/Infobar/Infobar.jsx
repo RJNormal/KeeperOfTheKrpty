@@ -1,5 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import ProfileButton from './ProfileButton';
+import './Infobar.css';
+
 
 
 function Navigation({ isLoaded }) {
@@ -15,14 +18,7 @@ function Navigation({ isLoaded }) {
       </div>
 
       <div id='profile'>
-      <div id='newspotform'>
-        {sessionUser && (
-          <NavLink to='/spots/new'>
-        <p id='newspotform'>Creat a New Spot</p>
-      </NavLink>
 
-        )}
-      </div>
         {isLoaded && (
           <ProfileButton user={sessionUser} />
         )}

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createBrowserRouter,RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Infobar/Infobar';
 import * as sessionActions from './store/session'
+import CharacterCreatePage from './components/Characters/CharacterCreation';
 
 
 function Layout() {
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Keepers of the Krypt</h1>
+        element: <CharacterCreatePage/>
       }
          ]
   }

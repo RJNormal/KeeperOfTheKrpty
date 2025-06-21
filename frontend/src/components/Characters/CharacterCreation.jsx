@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './CCPage.css'
 
 const CharacterCreatePage = ({ userId }) => {
   const [form, setForm] = useState({
