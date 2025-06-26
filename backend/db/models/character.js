@@ -5,17 +5,19 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Character extends Model {
     static associate(models) {
-      Character.belongsTo(models.User, { foreignKey: 'userId' });
-      Character.hasOne(models.SaveSlot, {
-        foreignKey: 'characterId',
-        as: 'saveSlot',
-        onDelete: 'CASCADE',
-      });
+      Character.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner' });
+      Character.hasMany(models.Note, { foreignKey: 'characterId', onDelete: 'CASCADE' });
+      Character.hasMany(models.CharacterImage, { foreignKey: 'characterId', onDelete: 'CASCADE' });
     }
   }
 
   Character.init(
     {
+      ownerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'Users' }
+      },
       name: {
         type: DataTypes.STRING(50),
         allowNull: false,
@@ -24,34 +26,28 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       race: {
-        type: DataTypes.ENUM('Human', 'Elf', 'Dwarf'),
+        type: DataTypes.STRING(50),
         allowNull: false,
         validate: {
-          isIn: {
-            args: [['Human', 'Elf', 'Dwarf']],
-            msg: 'Race must be either Human, Elf, or Dwarf',
-          },
+          len: [1, 50],
         },
       },
       className: {
-        type: DataTypes.ENUM('Warrior', 'Mage', 'Rogue'),
+        type: DataTypes.STRING(50),
         allowNull: false,
-         validate: {
-          isIn: {
-            args: [['Warrior', 'Mage', 'Rogue']],
-            msg: 'Race must be either Warrior, Mage, Rogue',
-          },
+        validate: {
+          len: [1, 50],
         },
-        
       },
-      portrait: {
-        type: DataTypes.STRING, 
-        allowNull: true, 
-      },
-      userId: {
-        type: DataTypes.INTEGER,
+      backstory: {
+        type: DataTypes.TEXT,
         allowNull: false,
+        validate: {
+          len: [0, 1000] 
+        }
+    
       },
+      
     },
     {
       sequelize,

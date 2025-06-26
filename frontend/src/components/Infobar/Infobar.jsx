@@ -12,8 +12,7 @@ function Navigation({ isLoaded }) {
     <nav className="navbar">
       <div id='homelink'>
         <NavLink to="/">
-          <img id='imglink' src='insert.jpg'></img>
-          <p>Keeper of The Krypt</p>
+          <img id='imglink' src='/2407507.png'></img>
         </NavLink>
       </div>
 

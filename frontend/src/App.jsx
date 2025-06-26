@@ -3,7 +3,9 @@ import { useDispatch } from 'react-redux';
 import { createBrowserRouter,RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Infobar/Infobar';
 import * as sessionActions from './store/session'
-import CharacterCreatePage from './components/Characters/CharacterCreation';
+import CreateCharacter from './components/Characters/CharacterCreation';
+import HomePage from './components/Home Page/HomePage';
+import CharacterDetail from './components/Characters/CharacterDetailsPage';
 
 
 function Layout() {
@@ -30,7 +32,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <CharacterCreatePage/>
+        element: <HomePage/>
+      },
+      {
+        path: '/characters/new',
+        element: <CreateCharacter/>
+      },
+      {
+        path: '/characters/:id',
+        element: <CharacterDetail />
       }
          ]
   }

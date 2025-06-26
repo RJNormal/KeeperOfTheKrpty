@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { FaBars, FaUserCircle } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-//import './ProfileButton.css'
+import './ProfileButton.css'
 import { NavLink, useNavigate } from 'react-router-dom';
 
 
@@ -49,7 +49,11 @@ function ProfileButton({ user }) {
     <>
       <button id='NavButton' onClick={toggleMenu}>
         <FaBars />
-        <FaUserCircle />
+        <img 
+       src='https://cdn-icons-png.freepik.com/256/2941/2941722.png?semt=ais_hybrid'
+       alt="User Avatar" 
+       className="profile-avatar"
+    />
         
       </button>
       <div className={ulClassName} ref={ulRef}>

@@ -1,0 +1,42 @@
+.hidden{
+    visibility: hidden;
+}
+
+#NavButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+  }
+  
+  .profile-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #d4af37; /* subtle gold border */
+  }
+  #NavButton svg {
+    font-size: 18px; 
+  }
+  
+  #NavButton:hover {
+    background-color: #d1df0e;
+  }
+  .profile-dropdown {
+    background-color: #d4af37; 
+    color: #1a1a1a;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+    min-width: 200px;
+    position: absolute;
+    right: 0;
+    z-index: 1000;
+  }
+  
+
+ 

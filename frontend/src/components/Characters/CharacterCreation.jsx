@@ -1,111 +1,130 @@
 import { useState } from 'react';
-import './CCPage.css'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import './CCPage.css';
+import { createCharacter } from '../../store/characters';
 
-const CharacterCreatePage = ({ userId }) => {
-  const [form, setForm] = useState({
-    name: '',
-    race: 'Human',
-    class: '',
-    portrait: '',
-    userId: userId,
-  });
+function CreateCharacter() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [name, setName] = useState("");
+  const [race, setRace] = useState("Human");
+  const [className, setClassName] = useState("");
+  const [backstory, setBackstory] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
+  const [characterImages, setCharacterImages] = useState(["", "", "", "", ""]);
+  const [errors, setErrors] = useState({});
 
-  const races = ['Human', 'Elf', 'Dwarf'];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrors({});
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const imageUrls = [previewImage, ...characterImages.filter((img) => img.trim() !== "")];
+
+    const characterData = {
+      name,
+      race,
+      className,
+      backstory,
+    };
+
+    return dispatch(createCharacter(characterData,imageUrls))
+      .then((newCharacter) => {
+        if (newCharacter?.id) navigate(`/characters/${newCharacter.id}`);
+      })
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data?.errors) setErrors(data.errors);
+      });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccessMessage('');
-
-    //doing fetch for now, change to redux later
-    try {
-      const res = await fetch('api/characters', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || 'An error occurred');
-      } else {
-        setSuccessMessage(`Character "${data.name}" created successfully!`);
-        setForm({
-          name: '',
-          race: 'Human',
-          class: '',
-          portrait: '',
-          userId: userId,
-        });
-      }
-    } catch (err) {
-      console.error(err);
-      setError('Something went wrong.');
-    }
+  const handleDemoCharacter = () => {
+    setName("Jon Snow");
+    setRace("Human");
+    setClassName("Swordsmen");
+    setBackstory(" He truly knows nothing about the ways of the world.");
+    setPreviewImage("https://i.pinimg.com/736x/f0/8c/e4/f08ce4a4ca02719ad1961c6f099b763a.jpg");
+    setCharacterImages(["https://i.pinimg.com/736x/f0/8c/e4/f08ce4a4ca02719ad1961c6f099b763a.jpg"])
   };
 
   return (
-    <div className="form-container">
-      <h2>Create a Character</h2>
-
-      {error && <p className="error">{error}</p>}
-      {successMessage && <p className="success">{successMessage}</p>}
+    <div className='create-character'>
+      <button type='button' id='demo-char-btn' onClick={handleDemoCharacter}>Demo Character</button>
+      <h1>Create a Character</h1>
 
       <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            maxLength={50}
-            required
-          />
-        </label>
+        <div className='form-section'>
+          <label>Name
+            {errors.name && <p className='errormsg'>{errors.name}</p>}
+            <input
+              type='text'
+              value={name}
+              placeholder='Character name'
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
 
-        <label>
-          Race:
-          <select name="race" value={form.race} onChange={handleChange}>
-            {races.map((race) => (
-              <option key={race} value={race}>
-                {race}
-              </option>
-            ))}
-          </select>
-        </label>
+          <label>Race
+            {errors.race && <p className='errormsg'>{errors.race}</p>}
+            <input
+            type='text'
+              value={name}
+              placeholder='Race'
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
 
-        <label>
-          Class:
-          <input
-            name="class"
-            value={form.class}
-            onChange={handleChange}
-            required
-          />
-        </label>
+          <label>Class
+            {errors.className && <p className='errormsg'>{errors.className}</p>}
+            <input
+              type='text'
+              value={className}
+              placeholder='Class name'
+              onChange={(e) => setClassName(e.target.value)}
+            />
+          </label>
 
-        <label>
-          Portrait URL:
-          <input
-            name="portrait"
-            value={form.portrait}
-            onChange={handleChange}
-            placeholder="https://example.com/image.png"
-          />
-        </label>
+          <label>Backstory
+            {errors.backstory && <p className='errormsg'>{errors.backstory}</p>}
+            <textarea
+              value={backstory}
+              placeholder='Brief backstory...'
+              onChange={(e) => setBackstory(e.target.value)}
+            />
+          </label>
 
-        <button type="submit">Create Character</button>
+          <label>Portrait URL
+            {errors.portrait && <p className='errormsg'>{errors.portrait}</p>}
+            <input id='previmage'
+              type="text"
+              placeholder='Preview Image URL'
+              value={previewImage}
+              onChange={(e) => setPreviewImage(e.target.value)}
+              
+              />
+         
+          </label>
+          {characterImages.map((image, index) => (
+            <label key={index} className='inputs'>
+              <input id='imgs'
+                type="text"
+                placeholder={`Image URL ${index + 1}`}
+                value={image}
+                onChange={(e) => {
+                  const updatedImages = [...characterImages];
+                  updatedImages[index] = e.target.value;
+                  setCharacterImages(updatedImages);
+                }}
+                />
+            </label>
+          ))}
+
+          <button id='create-character-btn' type='submit'>Create Character</button>
+        </div>
       </form>
     </div>
   );
-};
+}
 
-export default CharacterCreatePage;
+export default CreateCharacter;
