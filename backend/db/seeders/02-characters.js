@@ -2,7 +2,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Characters', [
+    await queryInterface.bulkInsert('characters', [
       {
         ownerId: 1,
         name: 'Kaelen Duskthorn',
@@ -25,7 +25,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Characters', {
+    await queryInterface.bulkDelete('characters', {
       name: { [Sequelize.Op.in]: ['Kaelen Duskthorn', 'Brakka Stonegut'] },
     });
   },
