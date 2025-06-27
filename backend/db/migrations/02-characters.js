@@ -18,7 +18,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
+          model: {
+            tableName: 'Users',
+            schema: process.env.SCHEMA || undefined
+          },
           key: 'id'
         },
         onDelete: 'CASCADE'
@@ -53,7 +56,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "Characters";
+    options.tableName = 'Characters';
     return queryInterface.dropTable(options);
   }
 };
