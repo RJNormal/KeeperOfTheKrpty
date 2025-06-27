@@ -26,7 +26,7 @@ module.exports = {
         references: { model: 'Characters', key: 'id' },
         onDelete: 'CASCADE'
       },
-      comment: {
+      note: {
         type: Sequelize.STRING,
         allowNull: false
       },

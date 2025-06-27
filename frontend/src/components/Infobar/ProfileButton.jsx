@@ -60,8 +60,6 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <p className='loginptag'>Hello, {user.firstName}</p>
-            <p className='loginptag'>{user.email}</p>
-            <NavLink id='managespotslink' to='/spots/current'>Manage Spots</NavLink>
             <>
               <button id='logout' onClick={logout}>Log Out</button>
             </>

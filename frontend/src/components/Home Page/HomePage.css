@@ -149,6 +149,24 @@ body, html {
   .loginForm button:hover, .signupForm button:hover {
     background-color: #b9951f;
   }
+  .create-character-btn {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 10px 20px;
+    background-color: #6b4f2a; 
+    color: #f9f6ef;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Uncial Antiqua', cursive;
+    box-shadow: 0 3px 6px rgba(107, 79, 42, 0.6);
+    transition: background-color 0.3s ease;
+  }
+  
+  .create-character-btn:hover {
+    background-color: #8a6b32;
+  }
   
 
   @media (max-width: 600px) {

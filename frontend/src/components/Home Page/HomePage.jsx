@@ -10,7 +10,7 @@ function HomePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sessionUser = useSelector((state) => state.session.user);
-  const characters = useSelector((state) => state.characters.userCharacters);
+  const characters = useSelector((state) => state.characters.allCharacters);
 
   useEffect(() => {
     if (sessionUser) {
@@ -37,13 +37,37 @@ function HomePage() {
   if (characters && characters.length > 0) {
     return (
       <div className="home-logged-in">
+        
         <h2>Your Characters</h2>
-        <ul>
-          {characters.map((char) => (
-            <li key={char.id}>
-              <strong>{char.name}</strong> - {char.className} ({char.race})
-            </li>
-          ))}
+        <button
+        className="create-character-btn"
+        onClick={() => navigate('/characters/new')}
+      >
+        + Create New Character
+      </button>
+        <ul className="character-list">
+          {characters.map((char) => {
+            const previewImage = char.CharacterImages?.length > 0 ? char.CharacterImages[0].url : null;
+
+            return (
+              <li
+                key={char.id}
+                className="character-list-item"
+                onClick={() => navigate(`/characters/${char.id}`)}
+              >
+                {previewImage && (
+                  <img
+                    src={previewImage}
+                    alt={`${char.name} preview`}
+                    className="character-preview-image"
+                  />
+                )}
+                <div className="character-info">
+                  <strong>{char.name}</strong> - {char.className} ({char.race})
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
     );

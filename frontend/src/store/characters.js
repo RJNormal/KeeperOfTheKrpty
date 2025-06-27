@@ -174,7 +174,7 @@ switch (action.type) {
             byId: newById,
         };
     }
-    case "UPDATE_CHARACTER": {
+    case UPDATE_CHARACTER: {
         const updatedCharacter = action.payload;
         const updatedCharacters = state.allCharacters.map(character =>
             character.id === updatedCharacter.id ? updatedCharacter : character

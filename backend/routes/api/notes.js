@@ -1,7 +1,7 @@
 const express = require('express');
 const { check } = require('express-validator');
 const { requireAuth } = require('../../utils/auth');
-const { Note, Spot, SpotImage, User, NoteImage } = require('../../db/models');
+const { Note, Character, CharacterImage, User, NoteImage } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 
 
@@ -27,7 +27,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         attributes: ['id', 'firstName', 'lastName']
       },
       {
-        model: Spot,
+        model: Character,
         attributes: [
           'id', 'ownerId', 'address', 'city', 'state', 'country',
           'lat', 'lng', 'name', 'price'
@@ -38,7 +38,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         attributes: ['id', 'url']
       }
     ],
-    attributes: ['id', 'userId', 'spotId', 'note', 'stars', 'createdAt', 'updatedAt'],
+    attributes: ['id', 'userId', 'characterId', 'note', 'createdAt', 'updatedAt'],
   });
   res.status(200).json({ Notes: notes });
 }catch (error) {
@@ -99,7 +99,6 @@ router.delete('/:noteId', requireAuth, async (req, res, next) => {
     const { noteId } = req.params;
     const { user } = req;
 
-
     const note = await Note.findByPk(noteId);
 
     if (!note) {
@@ -114,17 +113,14 @@ router.delete('/:noteId', requireAuth, async (req, res, next) => {
       });
     }
 
-
     await note.destroy();
 
-    return res.status(200).json({
-      message: "Successfully deleted"
-    });
-
+    return res.status(200).json({ message: "Successfully deleted" }); 
   } catch (error) {
-    next(error)
+    next(error); 
   }
 });
+
 
 // Edit A Note 
 router.put('/:noteId', requireAuth, validateNote, async (req, res, next) => {

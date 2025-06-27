@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         references: { model: 'Characters', key: 'id' }
       },
-      comment: {
+      note: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {

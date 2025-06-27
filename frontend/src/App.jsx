@@ -6,6 +6,7 @@ import * as sessionActions from './store/session'
 import CreateCharacter from './components/Characters/CharacterCreation';
 import HomePage from './components/Home Page/HomePage';
 import CharacterDetail from './components/Characters/CharacterDetailsPage';
+import CharacterEditPage from './components/Characters/EditCharacterPage';
 
 
 function Layout() {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: '/characters/:id',
         element: <CharacterDetail />
+      },
+      {
+        path: '/characters/:id/edit',
+        element: <CharacterEditPage />
       }
          ]
   }

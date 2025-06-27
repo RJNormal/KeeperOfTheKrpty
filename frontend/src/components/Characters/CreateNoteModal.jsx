@@ -4,24 +4,21 @@ import { createNoteThunk } from '../../store/notes';
 import { useModal } from '../../context/Modal';
 
 
-const PostNoteModal = ({ spotId }) => {
+const CreateNoteModal = ({ characterId }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const [note, setNoteText] = useState("");  
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+      
         const noteData = {
-            comment: note, 
+          note: note.trim(),
         };
-
-        if (noteData.comment > 0) {
-            await dispatch(createNoteThunk(spotId, noteData));
-            closeModal();
-        } 
-    };
+      
+        await dispatch(createNoteThunk(characterId, noteData));
+        closeModal();
+      };
 
     return (
         <div className="postnotemodal">
@@ -38,4 +35,4 @@ const PostNoteModal = ({ spotId }) => {
     );
 };
 
-export default PostNoteModal;
+export default CreateNoteModal;

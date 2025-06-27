@@ -33,9 +33,9 @@ const validateCharacter = [
 module.exports = validateCharacter;
 
 const validateNote = [
-  check('comment')
+  check('note')
     .exists({ checkFalsy: true })
-    .withMessage("Comment text is required"),
+    .withMessage("note text is required"),
 
   handleValidationErrors
 ]
@@ -133,7 +133,7 @@ router.get('/:characterId', async (req, res, next) => {
     const previewImage = character.CharacterImages.length > 0 ? character.CharacterImages.find(image => image.preview)?.url : null;
     return res.status(200).json({
       id: character.id,
-      userId: character.userId,
+      ownerId: character.ownerId,
       name: character.name,
       race: character.race,
       className: character.className,
@@ -213,7 +213,7 @@ router.put('/:characterId', requireAuth, validateCharacter, async (req, res, nex
   try {
     const { characterId } = req.params;
     const { user } = req;
-    const { name,race,className,backstory,userId } = req.body;
+    const { name, race, className, backstory } = req.body;
 
     const character = await Character.findByPk(characterId);
 
@@ -230,17 +230,35 @@ router.put('/:characterId', requireAuth, validateCharacter, async (req, res, nex
     }
 
     await character.update({
-      name,race,className
+      name, race, className, backstory
     });
 
+  
+    const updatedCharacter = await Character.findByPk(characterId, {
+      include: [
+        {
+          model: CharacterImage,
+          attributes: ['id', 'url', 'preview']
+        },
+        {
+          model: User,
+          as: 'Owner',
+          attributes: ['id', 'firstName', 'lastName']
+        }
+      ]
+    });
 
-    return res.status(200).json(character);
+    const previewImage = updatedCharacter.CharacterImages.find(img => img.preview)?.url || null;
+
+    return res.status(200).json({
+      ...updatedCharacter.toJSON(),
+      previewImage
+    });
 
   } catch (error) {
     next(error);
   }
 });
-
 
 // Add Image to Character
 router.post('/:characterId/images', requireAuth, async (req, res, next) => {
@@ -285,7 +303,7 @@ router.post('/:characterId/images', requireAuth, async (req, res, next) => {
 router.post('/:characterId/notes', requireAuth, validateNote, async (req, res, next) => {
   try {
     const { characterId } = req.params;
-    const { comment } = req.body;
+    const { note } = req.body;
 
     const character = await Character.findByPk(characterId)
 
@@ -299,7 +317,7 @@ router.post('/:characterId/notes', requireAuth, validateNote, async (req, res, n
     const newNote = await Note.create({
       userId: req.user.id,
       characterId,
-      comment
+      note
     });
 
     const noteWithUser = await Note.findOne({
@@ -343,6 +361,62 @@ router.get('/:characterId/notes', async (req, res, next) => {
       ]
     });
     return res.status(200).json({ Notes: notes });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// PUT /api/characters/:characterId/notes/:noteId
+router.put('/:characterId/notes/:noteId', requireAuth, async (req, res, next) => {
+  const { characterId, noteId } = req.params;
+  const { note } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const existingNote = await Note.findByPk(noteId);
+    if (!existingNote) {
+      return res.status(404).json({ message: "Note couldn't be found" });
+    }
+
+    if (existingNote.userId !== userId) {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+
+    existingNote.note = note;
+    await existingNote.save();
+
+
+    const updatedNote = await Note.findByPk(noteId, {
+      include: {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName']
+      }
+    });
+
+    return res.status(200).json(updatedNote);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.delete('/:characterId/notes/:noteId', requireAuth, async (req, res, next) => {
+  try {
+    const { characterId, noteId } = req.params;
+    const { user } = req;
+
+    const targetNote = await Note.findByPk(noteId);
+
+    if (!targetNote || targetNote.characterId != characterId) {
+      return res.status(404).json({ message: "Note couldn't be found" });
+    }
+
+    if (targetNote.userId !== user.id) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    await targetNote.destroy();
+
+    return res.status(200).json({ message: "Successfully deleted" });
   } catch (error) {
     next(error);
   }

@@ -5,7 +5,8 @@ const sessionRouter = require('./session.js');
 
 
 
-const { User, Char } = require('../../db/models');
+
+const { User } = require('../../db/models');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth.js');
 
 router.use(restoreUser);
