@@ -33,7 +33,8 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Characters', {
+    options.tableName = 'Characters';
+    await queryInterface.bulkDelete(options, {
       name: { [Sequelize.Op.in]: ['Kaelen Duskthorn', 'Brakka Stonegut'] },
     });
   },
