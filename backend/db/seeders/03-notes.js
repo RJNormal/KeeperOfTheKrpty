@@ -1,10 +1,10 @@
 'use strict';
 
-const { Notes } = require('../models');
+const { Note } = require('../models');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await Notes.bulkCreate([
+    await Note.bulkCreate([
       {
         userId: 1,
         characterId: 2,
