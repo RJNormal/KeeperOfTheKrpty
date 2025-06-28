@@ -166,18 +166,18 @@ switch (action.type) {
         };
     }
     case DELETE_CHARACTER: {
-      const newState = {
+      const newAllCharacters = state.allCharacters?.filter(
+        (char) => char.id !== action.payload
+      ) || [];
+    
+      const newById = { ...(state.byId || {}) };
+      delete newById[action.payload];
+    
+      return {
         ...state,
-        allCharacters: state.allCharacters.filter(char => char.id !== action.payload),
+        allCharacters: newAllCharacters,
+        byId: newById,
       };
-    
-      if (newState.byId) {
-        const updatedById = { ...newState.byId };
-        delete updatedById[action.payload];
-        newState.byId = updatedById;
-      }
-    
-      return newState;
     }
     case UPDATE_CHARACTER: {
         const updatedCharacter = action.payload;
