@@ -9,6 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+    options.tableName = 'NoteImages';
     await NoteImage.bulkCreate([
     {
         url:  "test img",

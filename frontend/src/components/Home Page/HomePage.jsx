@@ -16,7 +16,7 @@ function HomePage() {
     if (sessionUser) {
       dispatch(getAllCharactersThunk());
     }
-  }, [dispatch, sessionUser, navigate.location]);
+  }, [dispatch, sessionUser]);
 
   if (!sessionUser) {
     return (

@@ -9,6 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+    options.tableName = 'CharacterImages';
     await CharacterImage.bulkCreate([
       {
         url: "https://i.pinimg.com/736x/90/47/34/9047346db12ebbabe2b490bfc33878f6.jpg",
