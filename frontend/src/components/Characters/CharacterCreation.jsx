@@ -71,7 +71,7 @@ function CreateCharacter() {
             type='text'
               value={name}
               placeholder='Race'
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setRace(e.target.value)}
             />
           </label>
 

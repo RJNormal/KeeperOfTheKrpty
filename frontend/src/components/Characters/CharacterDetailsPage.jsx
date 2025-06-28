@@ -73,8 +73,6 @@ const CharacterDetail = () => {
     return (
         <div className="characterDetails">
             <h3>{character.name}</h3>
-            <p>{character.city}, {character.state}, {character.country}</p>
-
             <section className="characterBackstory">
   <h4>Backstory</h4>
   <p>{character.backstory}</p>

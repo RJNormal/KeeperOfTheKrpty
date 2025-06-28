@@ -28,7 +28,7 @@ const CreateNoteModal = ({ characterId }) => {
                 onChange={(e) => setNoteText(e.target.value)}
                 placeholder="Write your note here..."
             />
-            <button id='submitnote' onClick={handleSubmit} disabled={note.length < 10 }>
+            <button id='submitnote' onClick={handleSubmit}>
                 Submit Your Note
             </button>
         </div>
