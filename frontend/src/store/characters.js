@@ -120,6 +120,7 @@ export const deleteCharacterThunk = (characterId) => async (dispatch) => {
 
     if (response.ok) {
         dispatch(deleteCharacterAction(characterId));
+        dispatch(getAllCharactersThunk());
     }
 
 };
