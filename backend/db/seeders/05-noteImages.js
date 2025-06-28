@@ -7,9 +7,12 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
 
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    options.tableName = 'NoteImages';
+    if (process.env.NODE_ENV === 'production') {
+      NoteImage.schema(process.env.SCHEMA);
+    }
     await NoteImage.bulkCreate([
     {
         url:  "test img",

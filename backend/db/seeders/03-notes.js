@@ -9,6 +9,9 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+    if (process.env.NODE_ENV === 'production') {
+      Note.schema(process.env.SCHEMA);
+    }
     await Note.bulkCreate([
       {
         userId: 1,

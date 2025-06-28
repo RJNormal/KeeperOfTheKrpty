@@ -13,8 +13,10 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   
   async up(queryInterface, Sequelize) {
-      options.tableName = 'Characters';
-      
+    if (process.env.NODE_ENV === 'production') {
+      Character.schema(process.env.SCHEMA);
+    }
+
        await Character.bulkCreate([
       {
         ownerId: 1,
