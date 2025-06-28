@@ -65,6 +65,7 @@ const CharacterDetail = () => {
         const confirm = window.confirm("Are you sure you want to delete this character?");
         if (confirm) {
             await dispatch(deleteCharacterThunk(id));
+            await dispatch(getAllCharactersThunk());
             navigate('/'); 
         }
     };

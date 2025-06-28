@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       ownerId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: { model: 'users' }
+        references: { model: 'Users' }
       },
       name: {
         type: DataTypes.STRING(50),
