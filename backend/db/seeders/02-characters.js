@@ -3,6 +3,11 @@
 
 const { Character } = require('../models');
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 module.exports = {
   async up(queryInterface, Sequelize) {
        await Character.bulkCreate([
@@ -28,7 +33,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Characters', {
+    await queryInterface.bulkDelete(options, {
       name: { [Sequelize.Op.in]: ['Kaelen Duskthorn', 'Brakka Stonegut'] },
     });
   },
