@@ -1,5 +1,8 @@
 'use strict';
 
+
+const { Characters } = require('../models');
+
 module.exports = {
   async up(queryInterface, Sequelize) {
        await Characters.bulkCreate([

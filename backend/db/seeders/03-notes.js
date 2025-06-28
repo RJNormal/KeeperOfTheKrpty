@@ -1,5 +1,7 @@
 'use strict';
 
+const { Notes } = require('../models');
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Notes', [
