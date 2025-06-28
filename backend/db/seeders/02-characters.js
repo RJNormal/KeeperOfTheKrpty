@@ -2,7 +2,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-       await Character.bulkCreate([
+       await Characters.bulkCreate([
       {
         ownerId: 1,
         name: 'Kaelen Duskthorn',
