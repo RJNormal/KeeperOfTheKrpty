@@ -1,11 +1,11 @@
 'use strict';
 
 
-const { Characters } = require('../models');
+const { Character } = require('../models');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-       await Characters.bulkCreate([
+       await Character.bulkCreate([
       {
         ownerId: 1,
         name: 'Kaelen Duskthorn',

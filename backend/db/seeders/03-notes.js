@@ -4,7 +4,7 @@ const { Notes } = require('../models');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Notes', [
+    await Notes.bulkCreate([
       {
         userId: 1,
         characterId: 2,
